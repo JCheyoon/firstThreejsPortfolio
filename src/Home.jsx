@@ -1,14 +1,10 @@
-import { OrbitControls } from "@react-three/drei";
 import { Perf } from "r3f-perf";
-import Player from "./Player.jsx";
+import Player from "./models/Player.jsx";
 
-const Experience = () => {
+const Home = () => {
   return (
     <>
       <Perf position="top-left" />
-
-      <OrbitControls makeDefault />
-
       <directionalLight
         castShadow
         position={[1, 2, 3]}
@@ -18,16 +14,12 @@ const Experience = () => {
       <ambientLight intensity={0.5} />
 
       <Player />
-      <mesh
-        receiveShadow
-        position-y={-0.1}
-        rotation-x={-Math.PI * 0.5}
-        scale={10}
-      >
-        <planeGeometry />
+
+      <mesh receiveShadow rotation-x={-Math.PI * 0.5}>
+        <planeGeometry args={[100, 100]} />
         <meshStandardMaterial color="greenyellow" />
       </mesh>
     </>
   );
 };
-export default Experience;
+export default Home;

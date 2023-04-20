@@ -21,7 +21,6 @@ export const useInput = () => {
 
   useEffect(() => {
     const handleKeyDown = (e) => {
-      console.log("down", e);
       setInput((m) => ({ ...m, [findKey(e.code)]: true }));
     };
     const handleKeyUp = (e) => {
