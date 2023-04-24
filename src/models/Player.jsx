@@ -26,10 +26,10 @@ const Player = () => {
   const [orbitControlsOptions] = useState({
     enablePan: false,
     enableZoom: false,
-    minAzimuthAngle: -Math.PI,
+    minAzimuthAngle: -Math.PI / 2,
     maxAzimuthAngle: Math.PI / 2,
     minPolarAngle: Math.PI / 3.3,
-    maxPolarAngle: Math.PI / 3.3,
+    maxPolarAngle: Math.PI / 2.3,
     enableDamping: false,
   });
 
@@ -99,7 +99,7 @@ const Player = () => {
       walkDirection.normalize();
       walkDirection.applyAxisAngle(rotationAngle, newDirectionOffset);
 
-      //move model&cam
+      //move model
       const moveX = walkDirection.x * delta * 2;
       const moveZ = walkDirection.z * delta * 2;
       myPlayer.scene.position.x += moveX;
