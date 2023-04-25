@@ -1,5 +1,4 @@
 import { Html, useProgress } from "@react-three/drei";
-import "./LoadingScreen.style.css";
 
 const LoadingScreen = () => {
   //TODO change css

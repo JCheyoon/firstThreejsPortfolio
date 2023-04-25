@@ -23,9 +23,10 @@ const Player = () => {
   const currentAction = useRef("");
   const controlsRef = useRef();
 
-  const [orbitControlsOptions] = useState({
+  const [orbitControlsOptions, setControlsOptions] = useState({
     enablePan: false,
     enableZoom: false,
+    enableRotate: true,
     minAzimuthAngle: -Math.PI / 2,
     maxAzimuthAngle: Math.PI / 2,
     minPolarAngle: Math.PI / 3.3,
@@ -108,6 +109,11 @@ const Player = () => {
       //update cam
       updateCamTarget();
       walkingSound.play();
+
+      //disable mouse rotation while walking
+      setControlsOptions((value) => ({ ...value, enableRotate: false }));
+    } else {
+      setControlsOptions((value) => ({ ...value, enableRotate: true }));
     }
   });
   return (

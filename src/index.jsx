@@ -4,7 +4,6 @@ import { Canvas } from "@react-three/fiber";
 import Home from "./Home.jsx";
 import { Suspense } from "react";
 import LoadingScreen from "./loading/LoadingScreen.jsx";
-
 const root = ReactDOM.createRoot(document.querySelector("#root"));
 root.render(
   <>

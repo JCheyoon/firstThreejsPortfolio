@@ -1,0 +1,77 @@
+.keys-wrapper {
+  transform: none !important;
+  position: fixed !important;
+  top: 100px !important;
+  right: 100px !important;
+  left: unset !important;
+
+  > div {
+    font-family: "Rubik Mono One", sans-serif;
+    width: 120px;
+    background: #00000088;
+    color: white;
+    padding: 25px;
+    white-space: nowrap;
+    overflow: hidden;
+    border-radius: 15px;
+    user-select: none;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+
+    div.key {
+      color: black;
+      width: 20px;
+      height: 20px;
+      border-radius: 4px;
+      position: relative;
+      background: white;
+      padding: 5px;
+      margin: 0 0 5px 5px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    div.row {
+      display: flex;
+      justify-content: center;
+    }
+
+    p {
+      margin: 5px 0 0;
+    }
+  }
+  button {
+    position: absolute;
+    top: 3px;
+    right: 3px;
+    font-size: 20px;
+    text-decoration: none;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: white;
+  }
+}
+
+.button-wrapper {
+  transform: none !important;
+  position: fixed !important;
+  top: 100px !important;
+  right: 100px !important;
+  left: unset !important;
+
+  .question {
+    display: flex;
+    justify-content: center;
+    width: 0;
+    background-color: #00000088;
+    font-size: 30px;
+    padding: 5px 22px;
+    border: none;
+    border-radius: 50%;
+    color: white;
+    cursor: pointer;
+  }
+}
