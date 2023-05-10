@@ -5,6 +5,7 @@ import { useInput } from "../hooks/useInput.jsx";
 import { useFrame, useThree } from "@react-three/fiber";
 import * as THREE from "three";
 import { walkingSound } from "../audio/audio.jsx";
+import { RigidBody } from "@react-three/rapier";
 
 let walkDirection = new THREE.Vector3();
 let rotationAngle = new THREE.Vector3(0, 1, 0);
@@ -14,6 +15,7 @@ const Player = () => {
   const { forward, backward, left, right, shift } = useInput();
   const myPlayer = useGLTF("./myplayer.glb");
   const { actions } = useAnimations(myPlayer.animations, myPlayer.scene);
+  const body = useRef();
 
   myPlayer.scene.traverse((object) => {
     if (object instanceof THREE.Mesh) {
@@ -101,8 +103,8 @@ const Player = () => {
       walkDirection.applyAxisAngle(rotationAngle, newDirectionOffset);
 
       //move model
-      const moveX = walkDirection.x * delta * 2;
-      const moveZ = walkDirection.z * delta * 2;
+      const moveX = walkDirection.x * delta;
+      const moveZ = walkDirection.z * delta;
       myPlayer.scene.position.x += moveX;
       myPlayer.scene.position.z += moveZ;
 
@@ -116,6 +118,7 @@ const Player = () => {
       setControlsOptions((value) => ({ ...value, enableRotate: true }));
     }
   });
+
   return (
     <>
       {useMemo(
@@ -124,7 +127,20 @@ const Player = () => {
         ),
         [orbitControlsOptions]
       )}
-      <primitive object={myPlayer.scene} />
+      <RigidBody
+        ref={body}
+        colliders="cuboid"
+        position={[
+          myPlayer.scene.position.x,
+          myPlayer.scene.position.y,
+          myPlayer.scene.position.z,
+        ]}
+        restitution={0.2}
+        friction={1}
+        type="kinematicPosition"
+      >
+        <primitive object={myPlayer.scene} />
+      </RigidBody>
     </>
   );
 };

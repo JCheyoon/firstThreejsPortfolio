@@ -5,6 +5,7 @@ import { useRef } from "react";
 import * as THREE from "three";
 import Ground from "./models/Ground.jsx";
 import Modal from "./modal/Modal.jsx";
+import { Physics, Debug } from "@react-three/rapier";
 
 const Home = () => {
   const directionalLight = useRef();
@@ -22,8 +23,11 @@ const Home = () => {
         ref={directionalLight}
       />
       <ambientLight intensity={0.5} />
-      <Player />
-      <Ground />
+      <Physics>
+        <Debug />
+        <Player />
+        <Ground />
+      </Physics>
     </>
   );
 };
