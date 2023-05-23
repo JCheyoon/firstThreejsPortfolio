@@ -5,7 +5,8 @@ import { useRef } from "react";
 import * as THREE from "three";
 import Ground from "./models/Ground.jsx";
 import Modal from "./modal/Modal.jsx";
-import { Physics, Debug } from "@react-three/rapier";
+import { Physics } from "@react-three/cannon";
+import Ball from "./models/Ball.jsx";
 
 const Home = () => {
   const directionalLight = useRef();
@@ -23,9 +24,9 @@ const Home = () => {
         ref={directionalLight}
       />
       <ambientLight intensity={0.5} />
-      <Physics>
-        <Debug />
+      <Physics broadphase="SAP">
         <Player />
+        <Ball />
         <Ground />
       </Physics>
     </>
