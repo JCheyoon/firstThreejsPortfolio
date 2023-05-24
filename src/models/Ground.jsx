@@ -1,13 +1,12 @@
-import { RigidBody } from "@react-three/rapier";
+import { usePlane } from "@react-three/cannon";
 
 const Ground = () => {
+  const [ref] = usePlane(() => ({ rotation: [-Math.PI / 2, 0, 0] }));
   return (
-    <RigidBody type="fixed" friction={1} restitution={0.2}>
-      <mesh receiveShadow rotation-x={-Math.PI * 0.5}>
-        <planeGeometry args={[100, 100]} />
-        <meshStandardMaterial color="greenyellow" />
-      </mesh>
-    </RigidBody>
+    <mesh ref={ref} receiveShadow>
+      <planeGeometry args={[100, 100]} />
+      <meshStandardMaterial color="greenyellow" />
+    </mesh>
   );
 };
 

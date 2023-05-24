@@ -5,7 +5,7 @@ import { useRef } from "react";
 import * as THREE from "three";
 import Ground from "./models/Ground.jsx";
 import Modal from "./modal/Modal.jsx";
-import { Physics } from "@react-three/cannon";
+import { Physics, Debug } from "@react-three/cannon";
 import Ball from "./models/Ball.jsx";
 
 const Home = () => {
@@ -25,9 +25,11 @@ const Home = () => {
       />
       <ambientLight intensity={0.5} />
       <Physics broadphase="SAP">
-        <Player />
-        <Ball />
-        <Ground />
+        <Debug color="black" scale={1.1}>
+          <Player />
+          <Ball />
+          <Ground />
+        </Debug>
       </Physics>
     </>
   );

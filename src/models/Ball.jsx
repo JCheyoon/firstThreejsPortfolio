@@ -1,13 +1,17 @@
-import { RigidBody } from "@react-three/rapier";
+import { useSphere } from "@react-three/cannon";
 
 const Ball = () => {
+  const [sphereRef] = useSphere(() => ({
+    args: [0.2, 0.3, 0.3],
+    mass: 100,
+    position: [-2, 1, 0],
+  }));
+
   return (
-    <RigidBody colliders="ball" friction={2} position={[3, 1, 0]}>
-      <mesh receiveShadow>
-        <sphereGeometry args={[0.2, 16, 16]} />
-        <meshStandardMaterial color="red" />
-      </mesh>
-    </RigidBody>
+    <mesh receiveShadow ref={sphereRef}>
+      <sphereGeometry args={[0.2, 8, 8]} />
+      <meshStandardMaterial color="red" />
+    </mesh>
   );
 };
 
