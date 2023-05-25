@@ -5,7 +5,7 @@ import { useInput } from "../hooks/useInput.jsx";
 import { useFrame, useThree } from "@react-three/fiber";
 import * as THREE from "three";
 import { walkingSound } from "../audio/audio.jsx";
-import { useSphere } from "@react-three/cannon";
+import { useBox } from "@react-three/cannon";
 
 let walkDirection = new THREE.Vector3();
 let rotationAngle = new THREE.Vector3(0, 1, 0);
@@ -15,11 +15,12 @@ const Player = () => {
   const { forward, backward, left, right, shift } = useInput();
   const myPlayer = useGLTF("./myplayer.glb");
   const { actions } = useAnimations(myPlayer.animations, myPlayer.scene);
-  const playerBodyArgs = [0.4, 1, 1];
+  const playerBodyArgs = [0.6, 1.5, 0.6];
 
-  const [playerBody, playerApi] = useSphere(
+  const [playerBody, playerApi] = useBox(
     (index) => ({
       allowSleep: false,
+      type: "Kinematic",
       args: playerBodyArgs,
     }),
     useRef(null)
@@ -119,7 +120,7 @@ const Player = () => {
       //move player body
       playerApi.position.set(
         myPlayer.scene.position.x,
-        myPlayer.scene.position.y,
+        myPlayer.scene.position.y + 0.9,
         myPlayer.scene.position.z
       );
       //update cam
@@ -143,8 +144,10 @@ const Player = () => {
       )}
 
       <mesh ref={playerBody}>
-        <primitive object={myPlayer.scene} />
+        <sphereGeometry args={playerBodyArgs} />
+        <meshStandardMaterial visible={false} />
       </mesh>
+      <primitive object={myPlayer.scene} />
     </>
   );
 };
