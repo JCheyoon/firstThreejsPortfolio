@@ -1,6 +1,6 @@
 import { Perf } from "r3f-perf";
 import Player from "./models/Player.jsx";
-import { useHelper } from "@react-three/drei";
+import { useHelper, Sky } from "@react-three/drei";
 import { useRef } from "react";
 import * as THREE from "three";
 import Ground from "./models/Ground.jsx";
@@ -24,6 +24,7 @@ const Home = () => {
         ref={directionalLight}
       />
       <ambientLight intensity={0.5} />
+      <Sky />
       <Physics broadphase="SAP">
         <Debug color="black" scale={1.1}>
           <Player />
