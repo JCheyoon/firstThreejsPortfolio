@@ -6,6 +6,7 @@ import { useFrame, useThree } from "@react-three/fiber";
 import * as THREE from "three";
 import { walkingSound } from "../audio/audio.jsx";
 import { useBox } from "@react-three/cannon";
+import KinematicBox from "./test.jsx";
 
 let walkDirection = new THREE.Vector3();
 let rotationAngle = new THREE.Vector3(0, 1, 0);
@@ -17,14 +18,10 @@ const Player = () => {
   const { actions } = useAnimations(myPlayer.animations, myPlayer.scene);
   const playerBodyArgs = [0.6, 1.5, 0.6];
 
-  const [playerBody, playerApi] = useBox(
-    (index) => ({
-      allowSleep: false,
-      type: "Kinematic",
-      args: playerBodyArgs,
-    }),
-    useRef(null)
-  );
+  const [playerBody, playerApi] = useBox(() => ({
+    type: "Kinematic ",
+    args: playerBodyArgs,
+  }));
 
   myPlayer.scene.traverse((object) => {
     if (object instanceof THREE.Mesh) {
@@ -148,6 +145,7 @@ const Player = () => {
         <meshStandardMaterial visible={false} />
       </mesh>
       <primitive object={myPlayer.scene} />
+      <KinematicBox />
     </>
   );
 };

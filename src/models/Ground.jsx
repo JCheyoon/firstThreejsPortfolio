@@ -13,13 +13,11 @@ const Ground = () => {
         <planeGeometry args={[100, 100]} />
         <circleGeometry args={[50, 50]} />
         <meshStandardMaterial
+          color="greenyellow"
           // aoMap={aoMap} 그림자 넣기
           alphaMap={alphaMap}
         ></meshStandardMaterial>
-        <meshStandardMaterial color="greenyellow" />
       </mesh>
-
-      {/*</mesh>*/}
     </>
   );
 };

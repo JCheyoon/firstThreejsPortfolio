@@ -7,6 +7,7 @@ import Ground from "./models/Ground.jsx";
 import Modal from "./modal/Modal.jsx";
 import { Physics, Debug } from "@react-three/cannon";
 import Ball from "./models/Ball.jsx";
+import Board from "./models/Board.jsx";
 
 const Home = () => {
   const directionalLight = useRef();
@@ -30,6 +31,7 @@ const Home = () => {
           <Player />
           <Ball />
           <Ground />
+          <Board />
         </Debug>
       </Physics>
     </>

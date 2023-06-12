@@ -5,6 +5,7 @@ const Ball = () => {
     args: [0.2, 0.3, 0.3],
     mass: 100,
     position: [-2, 1, 0],
+    type: "Dynamic",
   }));
 
   return (
