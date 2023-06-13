@@ -5,8 +5,7 @@ import { useInput } from "../hooks/useInput.jsx";
 import { useFrame, useThree } from "@react-three/fiber";
 import * as THREE from "three";
 import { walkingSound } from "../audio/audio.jsx";
-import { useBox } from "@react-three/cannon";
-import KinematicBox from "./test.jsx";
+import { CapsuleCollider, RigidBody } from "@react-three/rapier";
 
 let walkDirection = new THREE.Vector3();
 let rotationAngle = new THREE.Vector3(0, 1, 0);
@@ -16,12 +15,7 @@ const Player = () => {
   const { forward, backward, left, right, shift } = useInput();
   const myPlayer = useGLTF("./myplayer.glb");
   const { actions } = useAnimations(myPlayer.animations, myPlayer.scene);
-  const playerBodyArgs = [0.6, 1.5, 0.6];
-
-  const [playerBody, playerApi] = useBox(() => ({
-    type: "Kinematic ",
-    args: playerBodyArgs,
-  }));
+  const playerBody = useRef();
 
   myPlayer.scene.traverse((object) => {
     if (object instanceof THREE.Mesh) {
@@ -114,12 +108,6 @@ const Player = () => {
       myPlayer.scene.position.x += moveX;
       myPlayer.scene.position.z += moveZ;
 
-      //move player body
-      playerApi.position.set(
-        myPlayer.scene.position.x,
-        myPlayer.scene.position.y + 0.9,
-        myPlayer.scene.position.z
-      );
       //update cam
       updateCamTarget();
       walkingSound.play();
@@ -139,13 +127,25 @@ const Player = () => {
         ),
         [orbitControlsOptions]
       )}
-
-      <mesh ref={playerBody}>
-        <sphereGeometry args={playerBodyArgs} />
-        <meshStandardMaterial visible={false} />
-      </mesh>
-      <primitive object={myPlayer.scene} />
-      <KinematicBox />
+      <group>
+        <RigidBody
+          type="Kinematic"
+          ref={playerBody}
+          colliders={false}
+          scale={[0.5, 0.5, 0.5]}
+          enabledRotations={[false, false, false]}
+          position={[
+            myPlayer.scene.position.x,
+            myPlayer.scene.position.y,
+            myPlayer.scene.position.z,
+          ]}
+        >
+          <CapsuleCollider args={[0.4, 0.5]} position={[0, 1, 0]} />
+          <group>
+            <primitive object={myPlayer.scene} />
+          </group>
+        </RigidBody>
+      </group>
     </>
   );
 };

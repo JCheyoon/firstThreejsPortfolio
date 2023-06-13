@@ -1,23 +1,18 @@
-import { usePlane } from "@react-three/cannon";
-import { TextureLoader } from "three/src/loaders/TextureLoader";
-import { useLoader } from "@react-three/fiber";
+import { RigidBody, CylinderCollider } from "@react-three/rapier";
+
+import { Cylinder } from "@react-three/drei";
 
 const Ground = () => {
-  const [ref] = usePlane(() => ({ rotation: [-Math.PI / 2, 0, 0] }));
-
-  const alphaMap = useLoader(TextureLoader, "./alpha-map.png");
-
   return (
     <>
-      <mesh ref={ref} receiveShadow>
-        <planeGeometry args={[100, 100]} />
-        <circleGeometry args={[50, 50]} />
-        <meshStandardMaterial
-          color="greenyellow"
-          // aoMap={aoMap} 그림자 넣기
-          alphaMap={alphaMap}
-        ></meshStandardMaterial>
-      </mesh>
+      <RigidBody type="fixed" colliders={false}>
+        <mesh receiveShadow rotation={[0, 0, 0]} position={[0, -0.2, 0]}>
+          <CylinderCollider args={[0.3, 10]} position={[0, -0.1, 0]} />
+          <Cylinder scale={[10, 0.3, 10]}>
+            <meshStandardMaterial color="greenyellow" />
+          </Cylinder>
+        </mesh>
+      </RigidBody>
     </>
   );
 };

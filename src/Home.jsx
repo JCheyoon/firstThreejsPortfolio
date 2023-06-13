@@ -1,11 +1,11 @@
 import { Perf } from "r3f-perf";
 import Player from "./models/Player.jsx";
-import { useHelper, Sky } from "@react-three/drei";
+import { useHelper, Sky, Environment } from "@react-three/drei";
 import { useRef } from "react";
 import * as THREE from "three";
 import Ground from "./models/Ground.jsx";
 import Modal from "./modal/Modal.jsx";
-import { Physics, Debug } from "@react-three/cannon";
+import { Physics, Debug } from "@react-three/rapier";
 import Ball from "./models/Ball.jsx";
 import Board from "./models/Board.jsx";
 
@@ -24,15 +24,15 @@ const Home = () => {
         shadow-normalBias={0.04}
         ref={directionalLight}
       />
-      <ambientLight intensity={0.5} />
-      <Sky />
-      <Physics broadphase="SAP">
-        <Debug color="black" scale={1.1}>
-          <Player />
-          <Ball />
-          <Ground />
-          <Board />
-        </Debug>
+      <Environment preset="sunset" />
+      <color attach="background" args={["#dbecfb"]} />
+      <fog attach="fog" args={["#dbecfb", 30, 40]} />
+      <Physics>
+        <Debug />
+        <Player />
+        <Ball />
+        <Board />
+        <Ground />
       </Physics>
     </>
   );

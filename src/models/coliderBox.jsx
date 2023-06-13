@@ -4,10 +4,7 @@ const ColliderBox = ({ position, scale }) => {
   const [ref] = useBox(() => ({
     position: position,
     args: scale,
-    material: {
-      gravity: 100,
-      friction: 1,
-    },
+    type: "Static",
   }));
 
   return (
