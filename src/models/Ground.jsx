@@ -1,4 +1,8 @@
-import { RigidBody, CylinderCollider } from "@react-three/rapier";
+import {
+  RigidBody,
+  CylinderCollider,
+  CuboidCollider,
+} from "@react-three/rapier";
 
 import { Cylinder } from "@react-three/drei";
 
@@ -12,6 +16,13 @@ const Ground = () => {
             <meshStandardMaterial color="greenyellow" />
           </Cylinder>
         </mesh>
+      </RigidBody>
+      <RigidBody colliders={false} type="fixed" name="void">
+        <mesh position={[0, -1.5, 0]} rotation={[-Math.PI / 2, 0, 0]}>
+          <planeGeometry args={[100, 100]} />
+          <meshStandardMaterial color="white" />
+        </mesh>
+        <CuboidCollider position={[0, -3.5, 0]} args={[50, 0.1, 50]} sensor />
       </RigidBody>
     </>
   );

@@ -1,5 +1,5 @@
 import { useGLTF } from "@react-three/drei";
-import { CuboidCollider, RigidBody } from "@react-three/rapier";
+import { RigidBody } from "@react-three/rapier";
 
 const Board = () => {
   const board = useGLTF("./billboard.glb");

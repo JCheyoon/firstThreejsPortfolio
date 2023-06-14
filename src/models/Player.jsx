@@ -1,18 +1,21 @@
-import { OrbitControls, useAnimations, useGLTF } from "@react-three/drei";
-import DirectionOffset from "./directionOffset.jsx";
-import { useEffect, useRef, useState, useMemo } from "react";
-import { useInput } from "../hooks/useInput.jsx";
-import { useFrame, useThree } from "@react-three/fiber";
+import { useAnimations, useGLTF, useKeyboardControls } from "@react-three/drei";
+import { useRef, useEffect } from "react";
+import { useFrame } from "@react-three/fiber";
 import * as THREE from "three";
 import { walkingSound } from "../audio/audio.jsx";
 import { CapsuleCollider, RigidBody } from "@react-three/rapier";
+import Controls from "./Controls.jsx";
 
-let walkDirection = new THREE.Vector3();
-let rotationAngle = new THREE.Vector3(0, 1, 0);
-let rotateQuaternion = new THREE.Quaternion();
-let cameraTarget = new THREE.Vector3();
+const JUMP_FORCE = 0.5;
+const MOVEMENT_SPEED = 0.05;
+const MAX_VELOCITY = 1.5;
+
 const Player = () => {
-  const { forward, backward, left, right, shift } = useInput();
+  const jump = useKeyboardControls((state) => state[Controls.jump]);
+  const left = useKeyboardControls((state) => state[Controls.left]);
+  const right = useKeyboardControls((state) => state[Controls.right]);
+  const backward = useKeyboardControls((state) => state[Controls.back]);
+  const forward = useKeyboardControls((state) => state[Controls.forward]);
   const myPlayer = useGLTF("./myplayer.glb");
   const { actions } = useAnimations(myPlayer.animations, myPlayer.scene);
   const playerBody = useRef();
@@ -22,37 +25,9 @@ const Player = () => {
       object.castShadow = true;
     }
   });
+  const isOnFloor = useRef(true);
   const currentAction = useRef("");
-  const controlsRef = useRef();
-
-  const [orbitControlsOptions, setControlsOptions] = useState({
-    enablePan: false,
-    enableZoom: false,
-    enableRotate: true,
-    minAzimuthAngle: -Math.PI / 2,
-    maxAzimuthAngle: Math.PI / 2,
-    minPolarAngle: Math.PI / 3.3,
-    maxPolarAngle: Math.PI / 2.3,
-    enableDamping: false,
-  });
-
-  const camera = useThree((state) => state.camera);
-
-  const updateCamTarget = () => {
-    cameraTarget.x = myPlayer.scene.position.x;
-    cameraTarget.z = myPlayer.scene.position.z;
-    camera.position.z = myPlayer.scene.position.z + 16;
-
-    camera.lookAt(myPlayer.scene.position);
-    if (controlsRef.current) {
-      controlsRef.current.target = cameraTarget;
-    }
-  };
-
-  useEffect(() => {
-    myPlayer.scene.position.y = 2;
-    actions.landing.play().fadeOut(2);
-  }, []);
+  const character = useRef();
 
   useEffect(() => {
     let action;
@@ -69,64 +44,67 @@ const Player = () => {
       nextActionToPlay?.reset().fadeIn(0.2).play();
       currentAction.current = action;
     }
-  }, [forward, backward, left, right, shift]);
+  }, [forward, backward, left, right]);
 
-  useFrame((state, delta) => {
-    myPlayer.scene.position.y > 0 ? (myPlayer.scene.position.y -= 0.1) : null;
-
-    if (currentAction.current === "walking") {
-      //calculate towards cam
-      let angleYCamDirection = Math.atan2(
-        camera.position.x - myPlayer.scene.position.x,
-        camera.position.z - myPlayer.scene.position.z
-      );
-
-      //diagonal movement angle offset
-      let newDirectionOffset = DirectionOffset({
-        forward,
-        backward,
-        left,
-        right,
-      });
-
-      //rotate model
-      rotateQuaternion.setFromAxisAngle(
-        rotationAngle,
-        angleYCamDirection + newDirectionOffset
-      );
-      myPlayer.scene.quaternion.rotateTowards(rotateQuaternion, 0.2);
-
-      //calculate direction
-      camera.getWorldDirection(walkDirection);
-      walkDirection.y = 0;
-      walkDirection.normalize();
-      walkDirection.applyAxisAngle(rotationAngle, newDirectionOffset);
-
-      //move model
-      const moveX = walkDirection.x * delta;
-      const moveZ = walkDirection.z * delta;
-      myPlayer.scene.position.x += moveX;
-      myPlayer.scene.position.z += moveZ;
-
-      //update cam
-      updateCamTarget();
-      walkingSound.play();
-
-      //disable mouse rotation while walking
-      setControlsOptions((value) => ({ ...value, enableRotate: false }));
-    } else {
-      setControlsOptions((value) => ({ ...value, enableRotate: true }));
+  useFrame((state) => {
+    const impulse = { x: 0, y: 0, z: 0 };
+    if (jump && isOnFloor.current) {
+      impulse.y += JUMP_FORCE;
+      isOnFloor.current = false;
     }
+
+    const linvel = playerBody.current.linvel();
+    let changeRotation = false;
+    if (right && linvel.x < MAX_VELOCITY) {
+      impulse.x += MOVEMENT_SPEED;
+      changeRotation = true;
+      walkingSound.play();
+    }
+    if (left && linvel.x > -MAX_VELOCITY) {
+      impulse.x -= MOVEMENT_SPEED;
+      changeRotation = true;
+      walkingSound.play();
+    }
+    if (backward && linvel.z < MAX_VELOCITY) {
+      impulse.z += MOVEMENT_SPEED;
+      changeRotation = true;
+      walkingSound.play();
+    }
+    if (forward && linvel.z > -MAX_VELOCITY) {
+      impulse.z -= MOVEMENT_SPEED;
+      changeRotation = true;
+      walkingSound.play();
+    }
+
+    playerBody.current.applyImpulse(impulse, true);
+    if (changeRotation) {
+      const angle = Math.atan2(linvel.x, linvel.z);
+      character.current.rotation.y = angle;
+    }
+
+    // CAMERA FOLLOW
+    const characterWorldPosition = character.current.getWorldPosition(
+      new THREE.Vector3()
+    );
+    state.camera.position.x = characterWorldPosition.x;
+    state.camera.position.z = characterWorldPosition.z + 14;
+
+    const targetLookAt = new THREE.Vector3(
+      characterWorldPosition.x,
+      0,
+      characterWorldPosition.z
+    );
+
+    state.camera.lookAt(targetLookAt);
   });
+
+  const resetPosition = () => {
+    playerBody.current.setTranslation(vec3({ x: 0, y: 0, z: 0 }));
+    playerBody.current.setLinvel(vec3({ x: 0, y: 0, z: 0 }));
+  };
 
   return (
     <>
-      {useMemo(
-        () => (
-          <OrbitControls {...orbitControlsOptions} ref={controlsRef} />
-        ),
-        [orbitControlsOptions]
-      )}
       <group>
         <RigidBody
           type="Kinematic"
@@ -134,14 +112,9 @@ const Player = () => {
           colliders={false}
           scale={[0.5, 0.5, 0.5]}
           enabledRotations={[false, false, false]}
-          position={[
-            myPlayer.scene.position.x,
-            myPlayer.scene.position.y,
-            myPlayer.scene.position.z,
-          ]}
         >
           <CapsuleCollider args={[0.4, 0.5]} position={[0, 1, 0]} />
-          <group>
+          <group ref={character}>
             <primitive object={myPlayer.scene} />
           </group>
         </RigidBody>

@@ -1,40 +1,65 @@
 import { Perf } from "r3f-perf";
 import Player from "./models/Player.jsx";
-import { useHelper, Sky, Environment } from "@react-three/drei";
-import { useRef } from "react";
+import {
+  useHelper,
+  KeyboardControls,
+  Environment,
+  OrbitControls,
+} from "@react-three/drei";
+import { useRef, useMemo, useState } from "react";
 import * as THREE from "three";
 import Ground from "./models/Ground.jsx";
 import Modal from "./modal/Modal.jsx";
 import { Physics, Debug } from "@react-three/rapier";
 import Ball from "./models/Ball.jsx";
 import Board from "./models/Board.jsx";
+import Controls from "./models/Controls.jsx";
+import Texts from "./models/Texts.jsx";
 
 const Home = () => {
+  const map = useMemo(
+    () => [
+      { name: Controls.forward, keys: ["ArrowUp", "KeyW"] },
+      { name: Controls.back, keys: ["ArrowDown", "KeyS"] },
+      { name: Controls.left, keys: ["ArrowLeft", "KeyA"] },
+      { name: Controls.right, keys: ["ArrowRight", "KeyD"] },
+      { name: Controls.jump, keys: ["Space"] },
+    ],
+    []
+  );
+
   const directionalLight = useRef();
   useHelper(directionalLight, THREE.DirectionalLightHelper, 1);
+  const controlsRef = useRef();
+
+  const [orbitControlsOptions, setControlsOptions] = useState({
+    enablePan: false,
+    enableZoom: false,
+    enableRotate: true,
+    minPolarAngle: Math.PI / 3.3,
+    maxPolarAngle: Math.PI / 2.3,
+    enableDamping: false,
+  });
 
   return (
-    <>
+    <KeyboardControls map={map}>
       <Modal />
       <Perf position="top-left" />
-      <directionalLight
-        castShadow
-        position={[1, 2, 3]}
-        intensity={1.5}
-        shadow-normalBias={0.04}
-        ref={directionalLight}
-      />
+      <OrbitControls {...orbitControlsOptions} ref={controlsRef} />
+      {/*lignt*/}
       <Environment preset="sunset" />
-      <color attach="background" args={["#dbecfb"]} />
-      <fog attach="fog" args={["#dbecfb", 30, 40]} />
+      <directionalLight position={[5, 5, 5]} intensity={0.8} castShadow />
+
+      {/*models*/}
       <Physics>
         <Debug />
         <Player />
         <Ball />
         <Board />
+        <Texts />
         <Ground />
       </Physics>
-    </>
+    </KeyboardControls>
   );
 };
 export default Home;
