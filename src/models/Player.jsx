@@ -33,24 +33,29 @@ const Player = () => {
     let action;
     if (forward || backward || left || right) {
       action = "walking";
+    } else if (jump && isOnFloor.current) {
+      action = "landing";
     } else {
       action = "idle";
     }
-
     if (currentAction.current !== action) {
       const nextActionToPlay = actions[action];
       const current = actions[currentAction.current];
+
       current?.fadeOut(0.2);
       nextActionToPlay?.reset().fadeIn(0.2).play();
       currentAction.current = action;
     }
-  }, [forward, backward, left, right]);
+  }, [forward, backward, left, right, jump]);
 
   useFrame((state) => {
     const impulse = { x: 0, y: 0, z: 0 };
     if (jump && isOnFloor.current) {
       impulse.y += JUMP_FORCE;
       isOnFloor.current = false;
+      setTimeout(() => {
+        isOnFloor.current = true;
+      }, 900);
     }
 
     const linvel = playerBody.current.linvel();
