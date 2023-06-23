@@ -23,6 +23,12 @@ const Modal = () => {
       </div>
 
       <p>MOVEMENT</p>
+
+      <div className="row">
+        <div className="spacekey">SPACE</div>
+      </div>
+      <p>JUMP</p>
+
       <button onClick={hideModal}> &#10006;</button>
     </Html>
   ) : (

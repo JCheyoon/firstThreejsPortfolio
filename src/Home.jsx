@@ -4,6 +4,7 @@ import {
   useHelper,
   KeyboardControls,
   Environment,
+  Sky,
   OrbitControls,
 } from "@react-three/drei";
 import { useRef, useMemo, useState } from "react";
@@ -15,7 +16,6 @@ import Ball from "./models/Ball.jsx";
 import Board from "./models/Board.jsx";
 import Controls from "./models/Controls.jsx";
 import Texts from "./models/Texts.jsx";
-
 const Home = () => {
   const map = useMemo(
     () => [
@@ -47,8 +47,10 @@ const Home = () => {
       <Perf position="top-left" />
       <OrbitControls {...orbitControlsOptions} ref={controlsRef} />
       {/*lignt*/}
-      <Environment preset="sunset" />
-      <directionalLight position={[5, 5, 5]} intensity={0.8} castShadow />
+      <Sky />
+      {/*<Environment preset="park" />*/}
+      {/*<Environment files="/public/sunset.hdr" background />*/}
+      <directionalLight position={[5, 5, 5]} intensity={1} castShadow />
 
       {/*models*/}
       <Physics>
