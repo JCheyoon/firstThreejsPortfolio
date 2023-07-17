@@ -49,7 +49,6 @@ const Home = () => {
       {/*lignt*/}
       <Sky />
       {/*<Environment preset="park" />*/}
-      {/*<Environment files="/public/sunset.hdr" background />*/}
       <directionalLight position={[5, 5, 5]} intensity={1} castShadow />
 
       {/*models*/}
