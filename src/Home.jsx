@@ -3,7 +3,6 @@ import Player from "./models/Player.jsx";
 import {
   useHelper,
   KeyboardControls,
-  Environment,
   Sky,
   OrbitControls,
 } from "@react-three/drei";
@@ -48,15 +47,18 @@ const Home = () => {
       <OrbitControls {...orbitControlsOptions} ref={controlsRef} />
       {/*lignt*/}
       <Sky />
-      {/*<Environment preset="park" />*/}
-      <directionalLight position={[5, 5, 5]} intensity={1} castShadow />
-
+      <ambientLight intensity={0.5} />
+      <directionalLight
+        position={[5, 25, 25]}
+        intensity={1}
+        ref={directionalLight}
+        castShadow
+      />
       {/*models*/}
       <Physics>
         <Debug />
         <Player />
         <Ball />
-        <Board />
         <Texts />
         <Ground />
       </Physics>
