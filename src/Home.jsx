@@ -12,9 +12,10 @@ import Ground from "./models/Ground.jsx";
 import Modal from "./modal/Modal.jsx";
 import { Physics, Debug } from "@react-three/rapier";
 import Ball from "./models/Ball.jsx";
-import Board from "./models/Board.jsx";
 import Controls from "./models/Controls.jsx";
 import Texts from "./models/Texts.jsx";
+import Trees from "./models/Trees.jsx";
+import Board from "./models/Board.jsx";
 const Home = () => {
   const map = useMemo(
     () => [
@@ -66,6 +67,8 @@ const Home = () => {
         <Player />
         <Ball />
         <Texts />
+        <Trees />
+        <Board />
         <Ground />
       </Physics>
     </KeyboardControls>

@@ -7,7 +7,13 @@ const Board = () => {
 
   return (
     <group>
-      <RigidBody colliders="trimesh" type="fixed" position={[-2, 0, 0]}>
+      <RigidBody
+        colliders="trimesh"
+        type="fixed"
+        position={[0, 0, -8]}
+        rotation={[0, -Math.PI / 2, 0]}
+        scale={[0.8, 0.8, 0.8]}
+      >
         <primitive object={board.scene} />
       </RigidBody>
     </group>
