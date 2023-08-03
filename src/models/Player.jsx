@@ -3,7 +3,7 @@ import { useRef, useEffect } from "react";
 import { useFrame } from "@react-three/fiber";
 import * as THREE from "three";
 import { walkingSound } from "../audio/audio.jsx";
-import { CapsuleCollider, RigidBody } from "@react-three/rapier";
+import { CapsuleCollider, RigidBody, vec3 } from "@react-three/rapier";
 import Controls from "./Controls.jsx";
 
 const JUMP_FORCE = 0.5;
@@ -58,7 +58,7 @@ const Player = () => {
       }, 900);
     }
 
-    const linvel = playerBody.current.linvel();
+    const linvel = playerBody.current?.linvel();
     let changeRotation = false;
     if (right && linvel.x < MAX_VELOCITY) {
       impulse.x += MOVEMENT_SPEED;
@@ -81,14 +81,14 @@ const Player = () => {
       walkingSound.play();
     }
 
-    playerBody.current.applyImpulse(impulse, true);
+    playerBody.current?.applyImpulse(impulse, true);
     if (changeRotation) {
       const angle = Math.atan2(linvel.x, linvel.z);
       character.current.rotation.y = angle;
     }
 
     // CAMERA FOLLOW
-    const characterWorldPosition = character.current.getWorldPosition(
+    const characterWorldPosition = character.current?.getWorldPosition(
       new THREE.Vector3()
     );
     state.camera.position.x = characterWorldPosition.x;
@@ -117,6 +117,11 @@ const Player = () => {
           colliders={false}
           scale={[0.5, 0.5, 0.5]}
           enabledRotations={[false, false, false]}
+          onIntersectionEnter={({ other }) => {
+            if (other.rigidBodyObject.name === "void") {
+              resetPosition();
+            }
+          }}
         >
           <CapsuleCollider args={[0.4, 0.5]} position={[0, 1, 0]} />
           <group ref={character}>

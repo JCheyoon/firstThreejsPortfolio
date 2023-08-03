@@ -10,7 +10,7 @@ import { useRef, useMemo, useState } from "react";
 import * as THREE from "three";
 import Ground from "./models/Ground.jsx";
 import Modal from "./modal/Modal.jsx";
-import { Physics, Debug } from "@react-three/rapier";
+import { Physics } from "@react-three/rapier";
 import Ball from "./models/Ball.jsx";
 import Controls from "./models/Controls.jsx";
 import Texts from "./models/Texts.jsx";
@@ -62,8 +62,7 @@ const Home = () => {
         shadow-camera-bottom={-10}
       />
       {/*models*/}
-      <Physics>
-        <Debug />
+      <Physics debug>
         <Player />
         <Ball />
         <Texts />
