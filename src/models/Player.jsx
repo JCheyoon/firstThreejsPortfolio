@@ -3,7 +3,7 @@ import { useRef, useEffect } from "react";
 import { useFrame } from "@react-three/fiber";
 import * as THREE from "three";
 import { walkingSound } from "../audio/audio.jsx";
-import { CapsuleCollider, RigidBody, vec3 } from "@react-three/rapier";
+import { BallCollider, RigidBody, vec3 } from "@react-three/rapier";
 import Controls from "./Controls.jsx";
 
 const JUMP_FORCE = 0.5;
@@ -83,8 +83,7 @@ const Player = () => {
 
     playerBody.current?.applyImpulse(impulse, true);
     if (changeRotation) {
-      const angle = Math.atan2(linvel.x, linvel.z);
-      character.current.rotation.y = angle;
+      character.current.rotation.y = Math.atan2(linvel.x, linvel.z);
     }
 
     // CAMERA FOLLOW
@@ -104,32 +103,29 @@ const Player = () => {
   });
 
   const resetPosition = () => {
-    playerBody.current.setTranslation(vec3({ x: 0, y: 0, z: 0 }));
-    playerBody.current.setLinvel(vec3({ x: 0, y: 0, z: 0 }));
+    playerBody.current?.setTranslation(vec3({ x: 0, y: 0, z: 0 }));
+    playerBody.current?.setLinvel(vec3({ x: 0, y: 0, z: 0 }));
   };
 
   return (
-    <>
-      <group>
-        <RigidBody
-          type="Kinematic"
-          ref={playerBody}
-          colliders={false}
-          scale={[0.5, 0.5, 0.5]}
-          enabledRotations={[false, false, false]}
-          onIntersectionEnter={({ other }) => {
-            if (other.rigidBodyObject.name === "void") {
-              resetPosition();
-            }
-          }}
-        >
-          <CapsuleCollider args={[0.4, 0.5]} position={[0, 1, 0]} />
-          <group ref={character}>
-            <primitive object={myPlayer.scene} />
-          </group>
-        </RigidBody>
-      </group>
-    </>
+    <group>
+      <RigidBody
+        ref={playerBody}
+        colliders={false}
+        scale={[0.5, 0.5, 0.5]}
+        enabledRotations={[0, 0, 0]}
+        onIntersectionEnter={({ other }) => {
+          if (other.rigidBodyObject.name === "fog") {
+            resetPosition();
+          }
+        }}
+      >
+        <BallCollider args={[0.6]} position={[0, 0.6, 0]} />
+        <group ref={character}>
+          <primitive object={myPlayer.scene} />
+        </group>
+      </RigidBody>
+    </group>
   );
 };
 

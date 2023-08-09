@@ -37,7 +37,7 @@ const Home = () => {
     enableZoom: false,
     enableRotate: true,
     minPolarAngle: Math.PI / 3.3,
-    maxPolarAngle: Math.PI / 2.3,
+    maxPolarAngle: Math.PI / 2.5,
     enableDamping: false,
   });
 
@@ -51,11 +51,11 @@ const Home = () => {
       <ambientLight intensity={0.5} />
       <directionalLight
         castShadow
-        position={[0, 10, 5]}
+        position={[0, 16, 5]}
         intensity={1}
         shadow-mapSize-width={1024}
         shadow-mapSize-height={1024}
-        shadow-camera-far={50}
+        shadow-camera-far={60}
         shadow-camera-left={-10}
         shadow-camera-right={10}
         shadow-camera-top={10}

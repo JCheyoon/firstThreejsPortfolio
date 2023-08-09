@@ -23,7 +23,7 @@ const Trees = () => {
           key={index}
         >
           <mesh castShadow>
-            <cylinderGeometry args={[0.1, 0.1, 1.5, 8]} />
+            <cylinderGeometry args={[0.1, 0.1, 1.3, 5]} />
             <meshStandardMaterial color="#5C4B45" />
           </mesh>
           <mesh castShadow position={[0, 1, 0]}>
