@@ -3,32 +3,31 @@ import { RigidBody } from "@react-three/rapier";
 
 const Trees = () => {
   const trees = [
-    { position: [-2, 0, 8], args: [0.5, 1, 0.4] },
-    { position: [-5.5, 0, 1.5], args: [0.5, 2, 0.5] },
-    { position: [4, 0, -2], args: [0.6, 1, 0.2] },
-    { position: [-2.3, 0, -5], args: [0.4, 1, 0.6] },
-    { position: [2, 0, 5], args: [0.5, 1, 0.4] },
-    { position: [5, 0, -7], args: [0.6, 2, 0.1] },
-    { position: [7, 0, 3], args: [0.4, 1, 0.6] },
-    { position: [-7, 0, 3], args: [0.5, 2, 0.5] },
-    { position: [-5, 0, -3], args: [0.4, 1, 0.5] },
+    { position: [-4.2, 0.7, -7.5], args: [0.4, 2, 0.4] },
+    { position: [2.8, 0.7, -6.8], args: [0.3, 1, 0.3] },
+    { position: [-5.3, 0.7, -3], args: [0.3, 1, 0.2] },
+    { position: [-6.4, 0.7, -0.2], args: [0.3, 3, 0.3] },
+    { position: [-9.6, 0.7, -1.9], args: [0.3, 2, 0.3] },
+    { position: [-8.45, 0.7, 6.8], args: [0.3, 2, 0.3] },
+    { position: [-4.1, 0.7, 9.75], args: [0.3, 2, 0.3] },
+    { position: [4.5, 0.7, 9.2], args: [0.3, 2, 0.3] },
+    { position: [8.2, 0.7, 4.2], args: [0.3, 2, 0.3] },
+    { position: [6.25, 0.7, 2.1], args: [0.3, 2, 0.3] },
+    { position: [6.8, 0.7, -2.4], args: [0.3, 2, 0.3] },
   ];
   return (
     <>
       {trees.map((item, index) => (
         <RigidBody
-          colliders="trimesh"
+          colliders="cuboid"
           type="fixed"
           position={item.position}
+          args={item.args}
           key={index}
         >
-          <mesh castShadow>
-            <cylinderGeometry args={[0.1, 0.1, 1.3, 5]} />
-            <meshStandardMaterial color="#5C4B45" />
-          </mesh>
-          <mesh castShadow position={[0, 1, 0]}>
-            <dodecahedronGeometry args={item.args} />
-            <meshStandardMaterial color="#7DB337" />
+          <mesh>
+            <boxGeometry args={item.args} />
+            <meshBasicMaterial transparent={true} opacity={0} />
           </mesh>
         </RigidBody>
       ))}

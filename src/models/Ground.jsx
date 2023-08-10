@@ -5,6 +5,7 @@ import {
 } from "@react-three/rapier";
 import { Cylinder, Plane } from "@react-three/drei";
 import * as React from "react";
+import GroundWithTrees from "./GroundWithTrees.jsx";
 
 const Ground = () => {
   // const ground = useGLTF("./ground.glb");
@@ -12,10 +13,11 @@ const Ground = () => {
   return (
     <group>
       <RigidBody type="fixed" colliders={false} name="ground">
-        <CylinderCollider args={[0.3, 10]} position={[0, -0.1, 0]} />
-        <Cylinder scale={[10, 0.3, 10]} receiveShadow>
-          <meshStandardMaterial color="lightGreen" />
-        </Cylinder>
+        <CylinderCollider args={[0.2, 11.8]} position={[0, -0.1, 0]} />
+        <GroundWithTrees position={[0, 0, 0]} />
+        {/*<Cylinder scale={[10, 0.3, 10]} receiveShadow>*/}
+        {/*  <meshStandardMaterial color="lightGreen" />*/}
+        {/*</Cylinder>*/}
       </RigidBody>
       <RigidBody type="fixed" colliders={false} name="fog">
         <Plane

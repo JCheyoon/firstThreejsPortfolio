@@ -36,8 +36,8 @@ const Home = () => {
     enablePan: false,
     enableZoom: false,
     enableRotate: true,
-    minPolarAngle: Math.PI / 3.3,
-    maxPolarAngle: Math.PI / 2.5,
+    minPolarAngle: Math.PI / 2.6,
+    maxPolarAngle: Math.PI / 2.6,
     enableDamping: false,
   });
 
@@ -60,6 +60,7 @@ const Home = () => {
         shadow-camera-right={10}
         shadow-camera-top={10}
         shadow-camera-bottom={-10}
+        shadow-normalBias={0.04}
       />
       {/*models*/}
       <Physics debug>
