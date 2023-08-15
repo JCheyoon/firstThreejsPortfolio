@@ -16,6 +16,7 @@ import Controls from "./models/Controls.jsx";
 import Texts from "./models/Texts.jsx";
 import Trees from "./models/Trees.jsx";
 import Board from "./models/Board.jsx";
+import Rocks from "./models/Rocks.jsx";
 const Home = () => {
   const map = useMemo(
     () => [
@@ -68,6 +69,7 @@ const Home = () => {
         <Ball />
         <Texts />
         <Trees />
+        <Rocks />
         <Board />
         <Ground />
       </Physics>

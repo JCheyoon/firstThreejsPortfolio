@@ -1,4 +1,3 @@
-import { useGLTF } from "@react-three/drei";
 import { RigidBody } from "@react-three/rapier";
 
 const Trees = () => {
