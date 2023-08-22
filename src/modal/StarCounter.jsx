@@ -6,7 +6,7 @@ const StarCounter = () => {
   const { stars } = useContextData();
   const arrayOfFive = new Array(5).fill(null);
   return (
-    <Html wrapperClass="wrapper" center>
+    <Html wrapperClass="wrapper">
       {arrayOfFive.map((_, index) => (
         <span
           key={index}

@@ -1,6 +1,7 @@
 import { Text3D } from "@react-three/drei";
 import { useMatcapTexture } from "@react-three/drei";
 import { RigidBody } from "@react-three/rapier";
+import { hitSound } from "../audio/audio.jsx";
 
 const cheyoon = [
   { character: "C", position: [-2, 0, 3] },
@@ -13,6 +14,9 @@ const cheyoon = [
 ];
 
 const Texts = () => {
+  const playSound = () => {
+    hitSound.play();
+  };
   const [matcapTexture] = useMatcapTexture("B6B8B1_994A24_315C81_927963", 256);
   return (
     <>
@@ -23,6 +27,7 @@ const Texts = () => {
           position={item.position}
           key={index}
           mass={0.01}
+          onCollisionEnter={playSound}
         >
           <Text3D
             font={"./Open San.json"}

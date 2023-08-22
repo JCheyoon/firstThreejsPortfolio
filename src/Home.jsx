@@ -20,6 +20,7 @@ import Board from "./models/Board.jsx";
 import Rocks from "./models/Rocks.jsx";
 import Grass from "./models/Grass.jsx";
 import Star from "./models/Star.jsx";
+import OctoCat from "./models/OctoCat.jsx";
 const Home = () => {
   const map = useMemo(
     () => [
@@ -49,7 +50,6 @@ const Home = () => {
     <KeyboardControls map={map}>
       <Modal />
       <StarCounter />
-      <Perf position="bottom-left" />
       <OrbitControls {...orbitControlsOptions} ref={controlsRef} />
       {/*lignt*/}
       <Sky />
@@ -68,7 +68,7 @@ const Home = () => {
         shadow-normalBias={0.04}
       />
       {/*models*/}
-      <Physics debug>
+      <Physics>
         <Player />
         <Ball />
         <Texts />
@@ -77,6 +77,7 @@ const Home = () => {
         <Board />
         <Ground />
         <Star />
+        <OctoCat />
       </Physics>
       <Grass />
     </KeyboardControls>
