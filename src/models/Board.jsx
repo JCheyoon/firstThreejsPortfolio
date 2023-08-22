@@ -1,10 +1,13 @@
-import { Html } from "@react-three/drei";
 import { RigidBody } from "@react-three/rapier";
 import "./Board.style.scss";
 import BoardModel from "./BoardModel.jsx";
+import AboutMeBtn from "./AboutMeBtn.jsx";
 
 const Board = () => {
-  //TODO change iframe to picture and make click event
+  const portalToSite = () => {
+    window.open("https://jcheyoon.com/", "_blank");
+  };
+
   return (
     <group>
       <RigidBody
@@ -16,6 +19,17 @@ const Board = () => {
       >
         <BoardModel />
       </RigidBody>
+      <AboutMeBtn
+        position={[1, 1.3, -8.9]}
+        rotation={[0, -Math.PI / 2, 0]}
+        onClick={portalToSite}
+        onPointerEnter={() => {
+          document.body.style.cursor = "pointer";
+        }}
+        onPointerLeave={() => {
+          document.body.style.cursor = "default";
+        }}
+      />
     </group>
   );
 };

@@ -4,6 +4,7 @@ import { Canvas } from "@react-three/fiber";
 import Home from "./Home.jsx";
 import { Suspense } from "react";
 import LoadingScreen from "./loading/LoadingScreen.jsx";
+import { DataProvider } from "./hooks/useContext.jsx";
 
 const root = ReactDOM.createRoot(document.querySelector("#root"));
 root.render(
@@ -11,7 +12,9 @@ root.render(
     <color attach="background" args={["#dbecfb"]} />
     <fog attach="fog" args={["#dbecfb", 30, 40]} />
     <Suspense fallback={<LoadingScreen />}>
-      <Home />
+      <DataProvider>
+        <Home />
+      </DataProvider>
     </Suspense>
   </Canvas>
 );

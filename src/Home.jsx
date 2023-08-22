@@ -10,6 +10,7 @@ import { useRef, useMemo, useState } from "react";
 import * as THREE from "three";
 import Ground from "./models/Ground.jsx";
 import Modal from "./modal/Modal.jsx";
+import StarCounter from "./modal/StarCounter.jsx";
 import { Physics } from "@react-three/rapier";
 import Ball from "./models/Ball.jsx";
 import Controls from "./models/Controls.jsx";
@@ -17,6 +18,8 @@ import Texts from "./models/Texts.jsx";
 import Trees from "./models/Trees.jsx";
 import Board from "./models/Board.jsx";
 import Rocks from "./models/Rocks.jsx";
+import Grass from "./models/Grass.jsx";
+import Star from "./models/Star.jsx";
 const Home = () => {
   const map = useMemo(
     () => [
@@ -45,7 +48,8 @@ const Home = () => {
   return (
     <KeyboardControls map={map}>
       <Modal />
-      <Perf position="top-left" />
+      <StarCounter />
+      <Perf position="bottom-left" />
       <OrbitControls {...orbitControlsOptions} ref={controlsRef} />
       {/*lignt*/}
       <Sky />
@@ -72,7 +76,9 @@ const Home = () => {
         <Rocks />
         <Board />
         <Ground />
+        <Star />
       </Physics>
+      <Grass />
     </KeyboardControls>
   );
 };

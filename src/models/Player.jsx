@@ -5,6 +5,7 @@ import * as THREE from "three";
 import { walkingSound } from "../audio/audio.jsx";
 import { BallCollider, RigidBody, vec3 } from "@react-three/rapier";
 import Controls from "./Controls.jsx";
+import { useContextData } from "../hooks/useContext.jsx";
 
 const JUMP_FORCE = 0.5;
 const MOVEMENT_SPEED = 0.05;
@@ -19,6 +20,7 @@ const Player = () => {
   const myPlayer = useGLTF("./myplayer.glb");
   const { actions } = useAnimations(myPlayer.animations, myPlayer.scene);
   const playerBody = useRef();
+  const { removeStar } = useContextData();
 
   myPlayer.scene.traverse((object) => {
     if (object instanceof THREE.Mesh) {
@@ -117,6 +119,9 @@ const Player = () => {
         onIntersectionEnter={({ other }) => {
           if (other.rigidBodyObject.name === "fog") {
             resetPosition();
+          }
+          if (other.rigidBodyObject.name.startsWith("star")) {
+            removeStar(other.rigidBodyObject.name);
           }
         }}
       >

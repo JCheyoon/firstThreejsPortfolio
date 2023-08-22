@@ -1,12 +1,16 @@
 import { RigidBody } from "@react-three/rapier";
+import BallModel from "./BallModel.jsx";
 
 const Ball = () => {
   return (
-    <RigidBody colliders="ball" velocity={3} mass={0.03} angularDamping={1}>
-      <mesh castShadow position={[2, 0, 0]}>
-        <sphereGeometry args={[0.2, 16, 16]} />
-        <meshStandardMaterial color="red" />
-      </mesh>
+    <RigidBody
+      colliders="ball"
+      velocity={3}
+      mass={0.03}
+      angularDamping={1}
+      position={[1, 1, 0]}
+    >
+      <BallModel />
     </RigidBody>
   );
 };

@@ -3,7 +3,7 @@ import {
   CylinderCollider,
   CuboidCollider,
 } from "@react-three/rapier";
-import { Plane } from "@react-three/drei";
+import { Html, Plane } from "@react-three/drei";
 import * as React from "react";
 import GroundWithTrees from "./GroundWithTrees.jsx";
 

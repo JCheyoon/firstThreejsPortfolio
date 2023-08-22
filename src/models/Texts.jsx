@@ -3,13 +3,13 @@ import { useMatcapTexture } from "@react-three/drei";
 import { RigidBody } from "@react-three/rapier";
 
 const cheyoon = [
-  { character: "C", position: [0, 0, -3] },
-  { character: "H", position: [0.5, 0, -3] },
-  { character: "E", position: [1, 0, -3] },
-  { character: "Y", position: [1.5, 0, -3] },
-  { character: "O", position: [2, 0, -3] },
-  { character: "O", position: [2.5, 0, -3] },
-  { character: "N", position: [3, 0, -3] },
+  { character: "C", position: [-2, 0, 3] },
+  { character: "H", position: [-1.5, 0, 3] },
+  { character: "E", position: [-1, 0, 3] },
+  { character: "Y", position: [-0.5, 0, 3] },
+  { character: "O", position: [0, 0, 3] },
+  { character: "O", position: [0.5, 0, 3] },
+  { character: "N", position: [1, 0, 3] },
 ];
 
 const Texts = () => {
