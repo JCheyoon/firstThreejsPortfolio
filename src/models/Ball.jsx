@@ -9,12 +9,13 @@ const Ball = () => {
   };
   return (
     <RigidBody
+      name="ball"
       ref={ball}
       colliders="ball"
       velocity={3}
       mass={0.03}
       angularDamping={1}
-      position={[1, 1, 0]}
+      position={[-5, 1, 0]}
       onIntersectionEnter={({ other }) => {
         if (other.rigidBodyObject.name === "fog") {
           resetBallPosition();

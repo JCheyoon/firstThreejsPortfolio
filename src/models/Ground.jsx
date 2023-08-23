@@ -15,12 +15,6 @@ const Ground = () => {
         <GroundWithTrees position={[0, 0, 0]} />
       </RigidBody>
       <RigidBody type="fixed" colliders={false} name="fog">
-        <Plane
-          args={[100, 100]}
-          rotation={[-Math.PI / 2, 0, 0]}
-          position={[0, -1, 0]}
-        />
-        <meshStandardMaterial color="white" />
         <CuboidCollider position={[0, -3, 0]} args={[50, 0.1, 50]} sensor />
       </RigidBody>
     </group>

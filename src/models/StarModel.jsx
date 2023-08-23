@@ -3,7 +3,7 @@ import { useGLTF } from "@react-three/drei";
 import { useFrame } from "@react-three/fiber";
 
 export default function StarModel(props) {
-  const { nodes, materials } = useGLTF("/star.gltf");
+  const { nodes, materials } = useGLTF("star.gltf");
   const starMesh = useRef();
   useFrame((state, delta) => {
     starMesh.current.rotation.z += 0.1; // Adjust rotation speed as needed
@@ -23,4 +23,4 @@ export default function StarModel(props) {
   );
 }
 
-useGLTF.preload("/star.gltf");
+useGLTF.preload("star.gltf");

@@ -27,11 +27,11 @@ const OctoCat = () => {
           anchorY="middle"
           fontSize={0.3}
         >
-          Click and{"\n"}Check
+          Click and{"\n"}Check my
         </Text>
         <Text
           font="./bangers-v20-latin-regular.woff"
-          position={[6.95, 1.75, 6]}
+          position={[7.3, 1.75, 6]}
           anchorX="center"
           anchorY="middle"
           fontSize={0.3}

@@ -112,6 +112,7 @@ const Player = () => {
   return (
     <group>
       <RigidBody
+        name="player"
         ref={playerBody}
         colliders={false}
         scale={[0.5, 0.5, 0.5]}

@@ -2,7 +2,7 @@ import React, { useRef } from "react";
 import { useGLTF } from "@react-three/drei";
 
 export default function OctocatModel(props) {
-  const { nodes, materials } = useGLTF("/octocat.glb");
+  const { nodes, materials } = useGLTF("octocat.glb");
   return (
     <group {...props} dispose={null}>
       <group scale={0.01}>
@@ -43,4 +43,4 @@ export default function OctocatModel(props) {
   );
 }
 
-useGLTF.preload("/octocat.glb");
+useGLTF.preload("octocat.glb");

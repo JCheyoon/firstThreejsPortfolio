@@ -1,6 +1,11 @@
 # Cheyoon first Three.js site
 My new portfolio website made with React Three Fiber🎉.
 
+### Public pages:
+![]()
+
+> [>> Check it out here!](https://three.jcheyoon.com/)
+
 ### Features:
 
 - **Playable**
@@ -15,5 +20,6 @@ My new portfolio website made with React Three Fiber🎉.
 - React Three Fiber
 - React Rapier
 - React Drei
-- Styled component + SCSS
+- CSS + SCSS
+- Blender
 

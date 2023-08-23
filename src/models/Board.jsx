@@ -34,13 +34,13 @@ const Board = () => {
       <Float speed={1} rotationIntensity={0} floatIntensity={0.1}>
         <Text
           font="./bangers-v20-latin-regular.woff"
-          position={[1, 1.08, -8.85]}
+          position={[1.1, 1.08, -8.85]}
           anchorX="center"
           anchorY="middle"
           color="white"
           fontSize={0.14}
         >
-          Click button!
+          Click this button!
         </Text>
       </Float>
     </group>

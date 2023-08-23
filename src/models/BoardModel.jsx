@@ -6,7 +6,7 @@ import React, { useRef } from "react";
 import { useGLTF } from "@react-three/drei";
 
 export default function BoardModel(props) {
-  const { nodes, materials } = useGLTF("/billboard.glb");
+  const { nodes, materials } = useGLTF("billboard.glb");
   return (
     <group {...props} dispose={null}>
       <group position={[0.862, 0.977, 0]}>
@@ -69,4 +69,4 @@ export default function BoardModel(props) {
   );
 }
 
-useGLTF.preload("/billboard.glb");
+useGLTF.preload("billboard.glb");

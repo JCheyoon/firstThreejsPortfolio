@@ -2,7 +2,7 @@ import React, { useRef } from "react";
 import { useGLTF } from "@react-three/drei";
 
 export default function GroundWithTrees(props) {
-  const { nodes, materials } = useGLTF("/ground.glb");
+  const { nodes, materials } = useGLTF("ground.glb");
   return (
     <group {...props} dispose={null}>
       <group scale={0.591}>
@@ -119,4 +119,4 @@ export default function GroundWithTrees(props) {
   );
 }
 
-useGLTF.preload("/ground.glb");
+useGLTF.preload("ground.glb");

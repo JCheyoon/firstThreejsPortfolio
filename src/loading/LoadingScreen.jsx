@@ -1,9 +1,13 @@
 import { Html, useProgress } from "@react-three/drei";
-
+import "./LoadingScreen.style.scss";
 const LoadingScreen = () => {
-  //TODO change css
-
-  const { active, progress, errors, item, loaded, total } = useProgress();
-  return <Html center>{progress} % loaded</Html>;
+  const { progress, loaded } = useProgress();
+  return (
+    <>
+      <Html center>
+        <div className="progress">{Math.round(progress)} % loaded</div>
+      </Html>
+    </>
+  );
 };
 export default LoadingScreen;

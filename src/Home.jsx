@@ -1,10 +1,9 @@
-import { Perf } from "r3f-perf";
 import Player from "./models/Player.jsx";
 import {
   useHelper,
   KeyboardControls,
-  Sky,
   OrbitControls,
+  Environment,
 } from "@react-three/drei";
 import { useRef, useMemo, useState } from "react";
 import * as THREE from "three";
@@ -21,6 +20,7 @@ import Rocks from "./models/Rocks.jsx";
 import Grass from "./models/Grass.jsx";
 import Star from "./models/Star.jsx";
 import OctoCat from "./models/OctoCat.jsx";
+import Pole from "./models/Pole.jsx";
 const Home = () => {
   const map = useMemo(
     () => [
@@ -52,20 +52,20 @@ const Home = () => {
       <StarCounter />
       <OrbitControls {...orbitControlsOptions} ref={controlsRef} />
       {/*lignt*/}
-      <Sky />
-      <ambientLight intensity={0.5} />
+      <Environment background={false} files={"envmap.hdr"} />
+
       <directionalLight
         castShadow
         position={[0, 16, 5]}
-        intensity={1}
+        intensity={0.8}
         shadow-mapSize-width={1024}
         shadow-mapSize-height={1024}
         shadow-camera-far={60}
-        shadow-camera-left={-10}
-        shadow-camera-right={10}
-        shadow-camera-top={10}
-        shadow-camera-bottom={-10}
-        shadow-normalBias={0.04}
+        shadow-camera-left={-20}
+        shadow-camera-right={20}
+        shadow-camera-top={20}
+        shadow-camera-bottom={-20}
+        shadow-normalBias={0.03}
       />
       {/*models*/}
       <Physics>
@@ -78,6 +78,7 @@ const Home = () => {
         <Ground />
         <Star />
         <OctoCat />
+        <Pole />
       </Physics>
       <Grass />
     </KeyboardControls>

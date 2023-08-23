@@ -2,7 +2,7 @@ import React, { useRef } from "react";
 import { useGLTF } from "@react-three/drei";
 
 export default function AboutMeBtn(props) {
-  const { nodes, materials } = useGLTF("/aboutmeBtn.glb");
+  const { nodes, materials } = useGLTF("aboutmeBtn.glb");
   return (
     <group {...props} dispose={null}>
       <group scale={[0.029, 0.141, 0.348]}>
@@ -19,4 +19,4 @@ export default function AboutMeBtn(props) {
   );
 }
 
-useGLTF.preload("/aboutmeBtn.glb");
+useGLTF.preload("aboutmeBtn.glb");

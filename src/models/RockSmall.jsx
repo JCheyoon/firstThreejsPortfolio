@@ -2,7 +2,7 @@ import React, { useRef } from "react";
 import { useGLTF } from "@react-three/drei";
 
 export default function RockSmall(props) {
-  const { nodes, materials } = useGLTF("/rockSmalls.gltf");
+  const { nodes, materials } = useGLTF("rockSmalls.gltf");
   return (
     <group {...props} dispose={null}>
       <mesh
@@ -16,4 +16,4 @@ export default function RockSmall(props) {
   );
 }
 
-useGLTF.preload("/rockSmalls.gltf");
+useGLTF.preload("rockSmalls.gltf");

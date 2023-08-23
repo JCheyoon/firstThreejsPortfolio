@@ -2,7 +2,7 @@ import React, { useRef } from "react";
 import { useGLTF } from "@react-three/drei";
 
 export default function GrassModel(props) {
-  const { nodes, materials } = useGLTF("/grass.gltf");
+  const { nodes, materials } = useGLTF("grass.gltf");
   return (
     <group {...props} dispose={null}>
       <mesh
@@ -15,4 +15,4 @@ export default function GrassModel(props) {
   );
 }
 
-useGLTF.preload("/grass.gltf");
+useGLTF.preload("grass.gltf");
