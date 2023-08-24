@@ -13,8 +13,6 @@ const StarsCollected = ({ show, setShow }) => {
         <div className="key">OK</div>
       </button>
     </Html>
-  ) : (
-    <Html wrapperClass="hide" />
-  );
+  ) : null;
 };
 export default StarsCollected;
