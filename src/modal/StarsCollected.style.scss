@@ -1,0 +1,49 @@
+.modalContainer {
+  transform: none !important;
+  position: fixed !important;
+  top: 50% !important;
+  left: 50% !important;
+
+  > div {
+    font-family: "Poppins", sans-serif;
+    width: 200px;
+    background: #00000088;
+    color: white;
+    padding: 25px;
+    white-space: nowrap;
+    overflow: hidden;
+    border-radius: 15px;
+    user-select: none;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    font-weight: bold;
+
+    button {
+      font-weight: bold;
+      font-family: "Poppins", sans-serif;
+      color: black;
+      width: 40px;
+      height: 30px;
+      border: none;
+      border-radius: 15px;
+      position: relative;
+      background: white;
+      padding: 5px;
+      margin: 8px 0 0 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+    }
+    h2 {
+      font-family: "Rubik Mono One", sans-serif;
+      font-size: 17px;
+      margin: 5px 0 10px 0;
+    }
+  }
+}
+
+.hide {
+  display: none;
+}

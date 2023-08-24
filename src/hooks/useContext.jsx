@@ -16,8 +16,6 @@ export const DataProvider = ({ children }) => {
     starCollectSound.play();
   };
 
-  const countStar = () => {};
-
   const value = {
     stars,
     setStars,

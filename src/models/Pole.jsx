@@ -4,7 +4,6 @@ import { useState } from "react";
 import { Float, Text } from "@react-three/drei";
 const Pole = () => {
   const [intersecting, setIntersection] = useState("");
-  console.log(intersecting);
 
   return (
     <>
