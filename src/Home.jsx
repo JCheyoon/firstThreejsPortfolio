@@ -5,7 +5,7 @@ import {
   OrbitControls,
   Environment,
 } from "@react-three/drei";
-import { useRef, useMemo, useState } from "react";
+import { useRef, useMemo, useState, useEffect } from "react";
 import * as THREE from "three";
 import Ground from "./models/Ground.jsx";
 import Modal from "./modal/Modal.jsx";
@@ -21,7 +21,21 @@ import Grass from "./models/Grass.jsx";
 import Star from "./models/Star.jsx";
 import OctoCat from "./models/OctoCat.jsx";
 import Pole from "./models/Pole.jsx";
+import AudioButton from "./audio/AudioButton.jsx";
+import { bgSound } from "./audio/audio.jsx";
+import { useContextData } from "./hooks/useContext.jsx";
+
 const Home = () => {
+  const { isPlaying } = useContextData();
+
+  useEffect(() => {
+    if (isPlaying) {
+      bgSound.play();
+    } else {
+      bgSound.pause();
+    }
+  }, [isPlaying]);
+
   const map = useMemo(
     () => [
       { name: Controls.forward, keys: ["ArrowUp", "KeyW"] },
@@ -48,12 +62,14 @@ const Home = () => {
 
   return (
     <KeyboardControls map={map}>
+      {/*Modal*/}
       <Modal />
       <StarCounter />
+      <AudioButton />
+      {/*Controls*/}
       <OrbitControls {...orbitControlsOptions} ref={controlsRef} />
       {/*lignt*/}
       <Environment background={false} files={"envmap.hdr"} />
-
       <directionalLight
         castShadow
         position={[0, 16, 5]}

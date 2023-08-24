@@ -10,16 +10,20 @@ export const DataProvider = ({ children }) => {
     { id: "star4", position: [-6.3, 2, 6.6] },
     { id: "star5", position: [4.5, 0.3, 8.5] },
   ]);
-
+  const [isPlaying, setIsPlaying] = useState(false);
   const removeStar = (starId) => {
     setStars((prevStars) => prevStars.filter((star) => star.id !== starId));
-    starCollectSound.play();
+    if (isPlaying) {
+      starCollectSound.play();
+    }
   };
 
   const value = {
     stars,
     setStars,
     removeStar,
+    isPlaying,
+    setIsPlaying,
   };
 
   return <DataContext.Provider value={value}>{children}</DataContext.Provider>;

@@ -20,7 +20,7 @@ const Player = () => {
   const myPlayer = useGLTF("./myplayer.glb");
   const { actions } = useAnimations(myPlayer.animations, myPlayer.scene);
   const playerBody = useRef();
-  const { removeStar } = useContextData();
+  const { removeStar, isPlaying } = useContextData();
 
   myPlayer.scene.traverse((object) => {
     if (object instanceof THREE.Mesh) {
@@ -47,6 +47,9 @@ const Player = () => {
       current?.fadeOut(0.2);
       nextActionToPlay?.reset().fadeIn(0.2).play();
       currentAction.current = action;
+      Array.from(document.getElementsByTagName("button")).forEach((el) =>
+        el?.blur()
+      );
     }
   }, [forward, backward, left, right, jump]);
 
@@ -65,22 +68,22 @@ const Player = () => {
     if (right && linvel.x < MAX_VELOCITY) {
       impulse.x += MOVEMENT_SPEED;
       changeRotation = true;
-      walkingSound.play();
+      playWalkingSound();
     }
     if (left && linvel.x > -MAX_VELOCITY) {
       impulse.x -= MOVEMENT_SPEED;
       changeRotation = true;
-      walkingSound.play();
+      playWalkingSound();
     }
     if (backward && linvel.z < MAX_VELOCITY) {
       impulse.z += MOVEMENT_SPEED;
       changeRotation = true;
-      walkingSound.play();
+      playWalkingSound();
     }
     if (forward && linvel.z > -MAX_VELOCITY) {
       impulse.z -= MOVEMENT_SPEED;
       changeRotation = true;
-      walkingSound.play();
+      playWalkingSound();
     }
 
     playerBody.current?.applyImpulse(impulse, true);
@@ -103,6 +106,12 @@ const Player = () => {
 
     state.camera.lookAt(targetLookAt);
   });
+
+  const playWalkingSound = () => {
+    if (isPlaying) {
+      walkingSound.play();
+    }
+  };
 
   const resetPosition = () => {
     playerBody.current?.setTranslation(vec3({ x: 0, y: 0, z: 0 }));
