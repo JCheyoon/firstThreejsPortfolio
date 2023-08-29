@@ -24,6 +24,7 @@ import Pole from "./models/Pole.jsx";
 import AudioButton from "./audio/AudioButton.jsx";
 import { bgSound } from "./audio/audio.jsx";
 import { useContextData } from "./hooks/useContext.jsx";
+import { useMediaQuery } from "react-responsive";
 
 const Home = () => {
   const { isPlaying } = useContextData();
@@ -59,11 +60,12 @@ const Home = () => {
     maxPolarAngle: Math.PI / 2.6,
     enableDamping: false,
   });
-
+  const isTabletOrMobile = useMediaQuery({ query: "(max-width: 500px)" });
   return (
     <KeyboardControls map={map}>
       {/*Modal*/}
-      <Modal />
+      {isTabletOrMobile ? null : <Modal />}
+
       <StarCounter />
       <AudioButton />
       {/*Controls*/}

@@ -1,11 +1,18 @@
-import { useAnimations, useGLTF, useKeyboardControls } from "@react-three/drei";
-import { useRef, useEffect } from "react";
+import {
+  Html,
+  useAnimations,
+  useGLTF,
+  useKeyboardControls,
+} from "@react-three/drei";
+import { useRef, useEffect, useState } from "react";
 import { useFrame } from "@react-three/fiber";
 import * as THREE from "three";
 import { walkingSound } from "../audio/audio.jsx";
 import { BallCollider, RigidBody, vec3 } from "@react-three/rapier";
 import Controls from "./Controls.jsx";
 import { useContextData } from "../hooks/useContext.jsx";
+import { useMediaQuery } from "react-responsive";
+import "./Player.style.scss";
 
 const JUMP_FORCE = 0.5;
 const MOVEMENT_SPEED = 0.05;
@@ -21,21 +28,80 @@ const Player = () => {
   const { actions } = useAnimations(myPlayer.animations, myPlayer.scene);
   const playerBody = useRef();
   const { removeStar, isPlaying } = useContextData();
+  const isTabletOrMobile = useMediaQuery({ query: "(max-width: 840px)" });
+  const isOnFloor = useRef(true);
+  const currentAction = useRef("");
+  const character = useRef();
+  const [mobileForward, setMobileForward] = useState(false);
+  const [mobileBackward, setMobileBackward] = useState(false);
+  const [mobileLeft, setMobileLeft] = useState(false);
+  const [mobileRight, setMobileRight] = useState(false);
+  const [mobileJump, setMobileJump] = useState(false);
+
+  const handleMobileForward = () => {
+    setMobileForward(true);
+    setMobileBackward(false);
+    setMobileLeft(false);
+    setMobileRight(false);
+  };
+
+  const handleMobileBackward = () => {
+    setMobileBackward(true);
+    setMobileForward(false);
+    setMobileLeft(false);
+    setMobileRight(false);
+  };
+
+  const handleMobileLeft = () => {
+    setMobileLeft(true);
+    setMobileBackward(false);
+    setMobileForward(false);
+    setMobileRight(false);
+  };
+
+  const handleMobileRight = () => {
+    setMobileRight(true);
+    setMobileLeft(false);
+    setMobileBackward(false);
+    setMobileForward(false);
+  };
+  const handleMobileMove = () => {
+    setMobileForward(false);
+    setMobileBackward(false);
+    setMobileLeft(false);
+    setMobileRight(false);
+  };
+
+  const handleMobileJump = () => {
+    setMobileJump(true);
+    setTimeout(() => {
+      setMobileJump(false);
+    }, 800);
+  };
 
   myPlayer.scene.traverse((object) => {
     if (object instanceof THREE.Mesh) {
       object.castShadow = true;
     }
   });
-  const isOnFloor = useRef(true);
-  const currentAction = useRef("");
-  const character = useRef();
 
   useEffect(() => {
     let action;
-    if (forward || backward || left || right) {
+    if (
+      forward ||
+      backward ||
+      left ||
+      right ||
+      mobileForward ||
+      mobileBackward ||
+      mobileLeft ||
+      mobileRight
+    ) {
       action = "walking";
-    } else if (jump && isOnFloor.current) {
+    } else if (
+      (jump && isOnFloor.current) ||
+      (mobileJump && isOnFloor.current)
+    ) {
       action = "landing";
     } else {
       action = "idle";
@@ -51,11 +117,22 @@ const Player = () => {
         el?.blur()
       );
     }
-  }, [forward, backward, left, right, jump]);
+  }, [
+    forward,
+    backward,
+    left,
+    right,
+    jump,
+    mobileForward,
+    mobileBackward,
+    mobileLeft,
+    mobileRight,
+    mobileJump,
+  ]);
 
   useFrame((state) => {
     const impulse = { x: 0, y: 0, z: 0 };
-    if (jump && isOnFloor.current) {
+    if ((jump && isOnFloor.current) || (mobileJump && isOnFloor.current)) {
       impulse.y += JUMP_FORCE;
       isOnFloor.current = false;
       setTimeout(() => {
@@ -65,22 +142,34 @@ const Player = () => {
 
     const linvel = playerBody.current?.linvel();
     let changeRotation = false;
-    if (right && linvel.x < MAX_VELOCITY) {
+    if (
+      (right && linvel.x < MAX_VELOCITY) ||
+      (mobileRight && linvel.x < MAX_VELOCITY)
+    ) {
       impulse.x += MOVEMENT_SPEED;
       changeRotation = true;
       playWalkingSound();
     }
-    if (left && linvel.x > -MAX_VELOCITY) {
+    if (
+      (left && linvel.x > -MAX_VELOCITY) ||
+      (mobileLeft && linvel.x > -MAX_VELOCITY)
+    ) {
       impulse.x -= MOVEMENT_SPEED;
       changeRotation = true;
       playWalkingSound();
     }
-    if (backward && linvel.z < MAX_VELOCITY) {
+    if (
+      (backward && linvel.z < MAX_VELOCITY) ||
+      (mobileBackward && linvel.z < MAX_VELOCITY)
+    ) {
       impulse.z += MOVEMENT_SPEED;
       changeRotation = true;
       playWalkingSound();
     }
-    if (forward && linvel.z > -MAX_VELOCITY) {
+    if (
+      (forward && linvel.z > -MAX_VELOCITY) ||
+      (mobileForward && linvel.z > -MAX_VELOCITY)
+    ) {
       impulse.z -= MOVEMENT_SPEED;
       changeRotation = true;
       playWalkingSound();
@@ -119,7 +208,7 @@ const Player = () => {
   };
 
   return (
-    <group>
+    <>
       <RigidBody
         name="player"
         ref={playerBody}
@@ -139,8 +228,42 @@ const Player = () => {
         <group ref={character}>
           <primitive object={myPlayer.scene} />
         </group>
+        {isTabletOrMobile ? (
+          <>
+            <Html wrapperClass="mobileKey left">
+              <div className="row">
+                <button onClick={handleMobileForward}>
+                  <span className="material-symbols-outlined">
+                    arrow_drop_up
+                  </span>
+                </button>
+              </div>
+              <div className="row">
+                <button onClick={handleMobileLeft}>
+                  <span className="material-symbols-outlined">arrow_left</span>
+                </button>
+                <button onClick={handleMobileBackward}>
+                  <span className="material-symbols-outlined">
+                    arrow_drop_down
+                  </span>
+                </button>
+                <button onClick={handleMobileRight}>
+                  <span className="material-symbols-outlined">arrow_right</span>
+                </button>
+              </div>
+            </Html>
+            <Html wrapperClass="mobileKey right">
+              <div className="row right">
+                <button onClick={handleMobileMove}>STOP</button>
+              </div>
+              <div className="row right">
+                <button onClick={handleMobileJump}>JUMP</button>
+              </div>
+            </Html>
+          </>
+        ) : null}
       </RigidBody>
-    </group>
+    </>
   );
 };
 

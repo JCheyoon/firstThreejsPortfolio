@@ -1,0 +1,62 @@
+.mobileKey {
+  transform: none !important;
+  position: fixed !important;
+
+  &.left {
+    top: unset !important;
+    bottom: 20vh !important;
+    left: 0.5vw !important;
+  }
+  &.right {
+    top: unset !important;
+    left: unset !important;
+    bottom: 20vh !important;
+    right: 25vw !important;
+
+    @media screen and (max-width: 650px) {
+      right: 45vw !important;
+      bottom: 23vh !important;
+    }
+  }
+
+  > div {
+    font-family: "Rubik Mono One", sans-serif;
+    padding: 25px;
+    white-space: nowrap;
+    overflow: hidden;
+    user-select: none;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+
+    div.row {
+      width: 200px;
+      display: flex;
+      justify-content: center;
+
+      &.right {
+        padding-bottom: 20px;
+      }
+    }
+  }
+  button {
+    font-family: "Rubik Mono One", sans-serif;
+    font-weight: lighter;
+    border: none;
+    color: black;
+    width: 60px;
+    height: 60px;
+    border-radius: 4px;
+    position: relative;
+    background: white;
+    padding: 5px;
+    margin: 0 0 5px 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    > span {
+      font-size: 60px;
+    }
+  }
+}

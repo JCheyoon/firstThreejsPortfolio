@@ -3,7 +3,6 @@ My new portfolio website made with React Three Fiber🎉.
 
 ### Public pages:
 ![](https://storage.jcheyoon.com/three.gif)
-
 > [>> Check it out here!](https://three.jcheyoon.com/)
 
 ### Features:
