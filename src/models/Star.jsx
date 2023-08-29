@@ -13,7 +13,7 @@ const Star = () => {
           colliders="ball"
           type="fixed"
           position={item.position}
-          key={index}
+          key={item.id}
           sensor
           name={item.id}
         >

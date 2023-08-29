@@ -60,7 +60,7 @@ const Home = () => {
     maxPolarAngle: Math.PI / 2.6,
     enableDamping: false,
   });
-  const isTabletOrMobile = useMediaQuery({ query: "(max-width: 500px)" });
+  const isTabletOrMobile = useMediaQuery({ query: "(max-width: 840px)" });
   return (
     <KeyboardControls map={map}>
       {/*Modal*/}

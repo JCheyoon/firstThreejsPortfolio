@@ -6,6 +6,12 @@
     top: unset !important;
     bottom: 20vh !important;
     left: 0.5vw !important;
+
+    @media screen and (max-width: 400px) {
+      top: unset !important;
+      bottom: 23vh !important;
+      left: 0.1vw !important;
+    }
   }
   &.right {
     top: unset !important;
@@ -16,6 +22,10 @@
     @media screen and (max-width: 650px) {
       right: 45vw !important;
       bottom: 23vh !important;
+    }
+    @media screen and (max-width: 400px) {
+      right: 45vw !important;
+      bottom: 26vh !important;
     }
   }
 

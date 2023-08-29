@@ -14,6 +14,10 @@
     outline: none;
     box-shadow: none;
   }
+
+  @media screen and (max-width: 400px) {
+    top: 19vh !important;
+  }
 }
 
 button.volumeIcon {
@@ -38,4 +42,9 @@ button.volumeIcon {
   position: fixed !important;
   top: 15vh !important;
   left: 90px !important;
+
+  @media screen and (max-width: 400px) {
+    top: 17vh !important;
+    left: 70px !important;
+  }
 }
